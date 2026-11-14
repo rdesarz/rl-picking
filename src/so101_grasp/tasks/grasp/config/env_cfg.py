@@ -21,6 +21,7 @@ from isaaclab_physx.physics import PhysxCfg
 from isaaclab_tasks.utils import PresetCfg
 
 from isaaclab_assets.robots import so101
+from isaaclab_physx.sim.schemas import PhysxRigidBodyCfg
 
 from so101_grasp.tasks.grasp import mdp
 
@@ -53,10 +54,10 @@ class SO101GraspSceneCfg(InteractiveSceneCfg):
         prim_path="{ENV_REGEX_NS}/Object",
         spawn=sim_utils.CuboidCfg(
             size=(OBJECT_SIZE, OBJECT_SIZE, OBJECT_SIZE),
-            rigid_props=sim_utils.UsdPhysicsRigidBodyCfg(
-                disable_gravity=False,
-                max_depenetration_velocity=1.0,
-            ),
+            rigid_props=[
+                sim_utils.UsdPhysicsRigidBodyCfg(),
+                PhysxRigidBodyCfg(disable_gravity=False, max_depenetration_velocity=1.0),
+            ],
             collision_props=sim_utils.UsdPhysicsCollisionCfg(),
             mass_props=sim_utils.MassCfg(mass=0.03),
             visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.05, 0.35, 0.95), metallic=0.0),

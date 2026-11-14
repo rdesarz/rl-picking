@@ -50,3 +50,10 @@ def test_isaac_sim_opencv_is_resolved_from_nvidia_index():
     project = (ROOT / "pyproject.toml").read_text()
     assert '"opencv-python-headless-noffmpeg==4.14.0.94rc3"' in project
     assert 'opencv-python-headless-noffmpeg = { index = "nvidia" }' in project
+
+
+def test_rigid_body_properties_use_the_correct_schema_fragments():
+    config = (ROOT / "src/so101_grasp/tasks/grasp/config/env_cfg.py").read_text()
+    assert "sim_utils.UsdPhysicsRigidBodyCfg()," in config
+    assert "PhysxRigidBodyCfg(disable_gravity=False, max_depenetration_velocity=1.0)" in config
+    assert "sim_utils.UsdPhysicsRigidBodyCfg(\n                disable_gravity=" not in config
