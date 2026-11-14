@@ -15,7 +15,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-isaacsim = ["isaaclab[isaacsim]"]
+isaacsim = [
+    "isaaclab[isaacsim]",
+    # Isaac Sim 6.2 requires NVIDIA's custom CPython 3.12 OpenCV wheel.
+    "opencv-python-headless-noffmpeg==4.14.0.94rc3",
+]
 ovphysx = ["ovphysx"]
 ovrtx = ["ovrtx", "ovstage"]
 video = ["isaaclab[video]"]
@@ -51,6 +55,7 @@ override-dependencies = [
 
 [tool.uv.sources]
 isaaclab = { git = "https://github.com/isaac-sim/IsaacLab.git", branch = "release/3.0.0", subdirectory = "tools/wheel_builder" }
+opencv-python-headless-noffmpeg = { index = "nvidia" }
 torch = { index = "pytorch-cu130" }
 torchvision = { index = "pytorch-cu130" }
 

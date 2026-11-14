@@ -26,6 +26,12 @@ try {
     }
     Write-Host "Resolved urllib3 $urllib3Version (Isaac Lab requires 2.8.0 or newer)." -ForegroundColor Green
 
+    $openCvVersion = (& uv run --extra isaacsim python -c "from importlib.metadata import version; print(version('opencv-python-headless-noffmpeg'))")
+    if ($LASTEXITCODE -ne 0) {
+        throw "Could not verify NVIDIA's OpenCV package."
+    }
+    Write-Host "Resolved NVIDIA OpenCV $openCvVersion." -ForegroundColor Green
+
     if ($SmokeTest) {
         Write-Host ""
         Write-Host "Running the 16-environment smoke test..." -ForegroundColor Cyan

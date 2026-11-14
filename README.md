@@ -78,6 +78,19 @@ uv run --extra isaacsim python -c "import urllib3; print(urllib3.__version__)"
 The expected result is 2.8.0 or newer. Do not manually downgrade to 2.7.0: Isaac Lab 3.0 publishes 2.8.0 as its
 tested override for the older Isaac Sim metadata.
 
+Isaac Sim 6.2 also requires NVIDIA's custom `opencv-python-headless-noffmpeg==4.14.0.94rc3` build. The workspace routes
+that package to NVIDIA's index explicitly. If an older lockfile cannot find it, refresh the package and verify the
+installed distribution:
+
+```powershell
+uv lock --refresh-package opencv-python-headless-noffmpeg
+uv sync --extra isaacsim
+uv run --extra isaacsim python -c "from importlib.metadata import version; print(version('opencv-python-headless-noffmpeg'))"
+```
+
+Do not add `opencv-python` or `opencv-python-headless` alongside it: all three distributions install the same `cv2`
+module and can overwrite one another.
+
 Inspect one environment with a visible renderer before training:
 
 ```powershell

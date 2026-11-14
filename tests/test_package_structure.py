@@ -44,3 +44,9 @@ def test_isaac_lab_official_urllib3_override_is_applied_at_workspace_root():
     project = (ROOT / "pyproject.toml").read_text()
     assert "override-dependencies = [" in project
     assert '"urllib3>=2.8.0"' in project
+
+
+def test_isaac_sim_opencv_is_resolved_from_nvidia_index():
+    project = (ROOT / "pyproject.toml").read_text()
+    assert '"opencv-python-headless-noffmpeg==4.14.0.94rc3"' in project
+    assert 'opencv-python-headless-noffmpeg = { index = "nvidia" }' in project
