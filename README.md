@@ -66,6 +66,18 @@ Install the pinned dependencies and run a short headless simulation:
 The first Isaac Sim launch displays NVIDIA's license prompt. Read and accept it to continue. For a non-interactive
 session, set `$env:OMNI_KIT_ACCEPT_EULA = "YES"` only after you have read and accepted those terms.
 
+If an older checkout reports that Isaac Sim requests `urllib3==2.7.0` while Isaac Lab requests `urllib3>=2.8.0`, pull
+the current `pyproject.toml` and re-resolve the environment:
+
+```powershell
+uv lock --upgrade-package urllib3
+uv sync --extra isaacsim
+uv run --extra isaacsim python -c "import urllib3; print(urllib3.__version__)"
+```
+
+The expected result is 2.8.0 or newer. Do not manually downgrade to 2.7.0: Isaac Lab 3.0 publishes 2.8.0 as its
+tested override for the older Isaac Sim metadata.
+
 Inspect one environment with a visible renderer before training:
 
 ```powershell

@@ -38,3 +38,9 @@ def test_windows_helpers_use_registered_task_id():
     assert "SO101-Grasp-Cube-State-v0" in setup_script
     assert "SO101-Grasp-State-v0" not in setup_script
     assert "uv sync --extra isaacsim" in setup_script
+
+
+def test_isaac_lab_official_urllib3_override_is_applied_at_workspace_root():
+    project = (ROOT / "pyproject.toml").read_text()
+    assert "override-dependencies = [" in project
+    assert '"urllib3>=2.8.0"' in project

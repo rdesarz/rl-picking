@@ -20,6 +20,12 @@ try {
         throw "uv sync failed with exit code $LASTEXITCODE."
     }
 
+    $urllib3Version = (& uv run --extra isaacsim python -c "import urllib3; print(urllib3.__version__)")
+    if ($LASTEXITCODE -ne 0) {
+        throw "Could not verify the resolved urllib3 version."
+    }
+    Write-Host "Resolved urllib3 $urllib3Version (Isaac Lab requires 2.8.0 or newer)." -ForegroundColor Green
+
     if ($SmokeTest) {
         Write-Host ""
         Write-Host "Running the 16-environment smoke test..." -ForegroundColor Cyan
